@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="master">
+
+<body>
+	<main layout:fragment="droguería">
+		<div class="col-12">
+			<h2>Productos</h2>
+			<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+				th:text="${mensaje}" class="alert">
+			</div>
+			<a class="btn btn-success mb-2" th:href="@{/productos/agregar}">Agregar</a>
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Código</th>
+							<th>Precio</th>
+							<th>Existencia</th>
+							<th>Tipo</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="producto : ${productos}">
+							<td th:text="${producto.nombreProducto}"></td>
+							<td th:text="${producto.codigoProducto}"></td>
+							<td th:text="${producto.precioProducto}"></td>
+							<td th:text="${producto.existenciaProducto}"></td>
+							<td th:text="${producto.tipoProducto}"></td>
+							<td>
+								<a class="btn btn-warning" th:href="@{/productos/editar/} + ${producto.idProducto}">Editar <i class="fa fa-edit"></i></a>
+							</td>
+							<td>
+								<form th:action="@{/productos/eliminar}" method="post">
+									<input type="hidden" name="ididProducto" th:value="${producto.idProducto}" />
+									<button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
+									</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
