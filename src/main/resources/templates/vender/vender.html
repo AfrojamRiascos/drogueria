@@ -46,8 +46,7 @@
 							<td th:text="${producto.total}"></td>
 							<td>
 								<form th:action="@{/vender/quitar/} + ${iterador.index}" method="post">
-									<button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
-									</button>
+									<button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
 								</form>
 							</td>
 						</tr>

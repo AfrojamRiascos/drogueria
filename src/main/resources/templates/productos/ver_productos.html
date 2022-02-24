@@ -19,7 +19,6 @@
 							<th>Existencia</th>
 							<th>Tipo</th>
 							<th>Editar</th>
-							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -31,13 +30,6 @@
 							<td th:text="${producto.tipoProducto}"></td>
 							<td>
 								<a class="btn btn-warning" th:href="@{/productos/editar/} + ${producto.idProducto}">Editar <i class="fa fa-edit"></i></a>
-							</td>
-							<td>
-								<form th:action="@{/productos/eliminar}" method="post">
-									<input type="hidden" name="ididProducto" th:value="${producto.idProducto}" />
-									<button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-trash"></i>
-									</button>
-								</form>
 							</td>
 						</tr>
 					</tbody>

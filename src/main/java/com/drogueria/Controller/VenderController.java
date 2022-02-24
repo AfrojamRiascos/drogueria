@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,8 @@ import com.drogueria.Repository.VentaRepository;
 @Controller
 @RequestMapping(path = "/vender")
 public class VenderController {
+	
+	private static Log LOG = LogFactory.getLog(VenderController.class);
 
 	@Autowired
 	private ProductoRepository productoRepository;
@@ -119,6 +125,7 @@ public class VenderController {
 			RedirectAttributes redirectAttrs) {
 		ArrayList<ProductoParaVenta> carrito = this.obtenerCarrito(request);
 		Producto productoBuscadoPorCodigo = productoRepository.findFirstByCodigoProducto(producto.getCodigoProducto());
+		
 		if (productoBuscadoPorCodigo == null) {
 			redirectAttrs
 					.addFlashAttribute("mensaje",
@@ -133,6 +140,7 @@ public class VenderController {
 		}
 		boolean encontrado = false;
 		for (ProductoParaVenta productoParaVenderActual : carrito) {
+			LOG.info(productoParaVenderActual.getCodigoProducto());
 			if (productoParaVenderActual.getCodigoProducto().equals(productoBuscadoPorCodigo.getCodigoProducto())) {
 				productoParaVenderActual.aumentarCantidad();
 				encontrado = true;
@@ -144,6 +152,13 @@ public class VenderController {
 					productoBuscadoPorCodigo.getCodigoProducto(), productoBuscadoPorCodigo.getPrecioProducto(),
 					productoBuscadoPorCodigo.getExistenciaProducto(), productoBuscadoPorCodigo.getIdProducto(), 1f));
 		}
+		LOG.info("Código: " + productoBuscadoPorCodigo.getCodigoProducto());
+		LOG.info("Id: " + productoBuscadoPorCodigo.getIdProducto());
+		LOG.info("Nombre: " + productoBuscadoPorCodigo.getNombreProducto());
+		LOG.info("Precio: " + productoBuscadoPorCodigo.getPrecioProducto());
+		LOG.info("Tipo: " + productoBuscadoPorCodigo.getTipoProducto());
+		LOG.info("Existencia: " + productoBuscadoPorCodigo.getExistenciaProducto());
+		
 		this.guardarCarrito(carrito, request);
 		return "redirect:/vender/";
 	}
